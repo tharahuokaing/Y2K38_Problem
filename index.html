@@ -1,487 +1,247 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
-
-<title>Cybersecurity & Y2K38 Command Center</title>
-
-<style>
-
-  :root { --primary: #004080; --terminal-bg: #0a0a0a; --accent: #00ff41; --warn: #ffae00; --danger: #ff3e3e; }
-
-  body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f0f2f5; color: #333; scroll-behavior: smooth; }
-
-  
-
-  /* Header & Countdown */
-
-  header { background: var(--primary); color: white; padding: 2rem; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-
-  #countdown-container { margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; display: inline-block; }
-
-  #timer { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); }
-
-
-
-  nav { background: #fff; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #ddd; }
-
-  nav a { margin: 0 15px; font-weight: bold; color: var(--primary); text-decoration: none; transition: 0.3s; }
-
-  nav a:hover { color: var(--accent); }
-
-
-
-  section { max-width: 900px; background: white; padding: 25px; margin: 20px auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-
-  h2 { color: var(--primary); border-left: 5px solid var(--primary); padding-left: 15px; font-family: 'Orbitron', sans-serif; }
-
-  
-
-  /* Terminal & Progress Bar */
-
-  #security-console { 
-
-    background: var(--terminal-bg); color: var(--accent); 
-
-    font-family: 'Courier New', monospace; padding: 20px; 
-
-    border-radius: 8px; border: 2px solid #333; height: 300px;
-
-    overflow-y: auto; margin-top: 20px;
-
-  }
-
-  .progress-bar-container { width: 100%; background: #222; border-radius: 4px; margin: 10px 0; display: none; }
-
-  .progress-bar { height: 10px; background: var(--accent); width: 0%; border-radius: 4px; transition: width 0.1s; }
-
-  
-
-  .console-btn { 
-
-    background: var(--primary); color: white; border: none; 
-
-    padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;
-
-    transition: 0.3s; font-family: 'Orbitron', sans-serif; font-size: 0.8rem;
-
-  }
-
-  .console-btn:hover { background: #002d5a; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-
-  
-
-  footer { text-align: center; padding: 40px; color: #888; font-size: 0.85em; }
-
-</style>
-
-</head>
-
-<body>
-
-
-
-<header>
-
-  <h1 style="font-family: 'Orbitron', sans-serif; margin:0;">GHOST PROTOCOL: CORE V1</h1>
-
-  <div id="countdown-container">
-
-    <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;">Time Remaining Until 32-Bit Overflow</div>
-
-    <div id="timer">Loading T-Minus...</div>
-
-  </div>
-
-</header>
-
-
-
-<div id="login" style="max-width: 400px; margin: 80px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
-
-  <h3 style="text-align:center; font-family: 'Orbitron', sans-serif;">AUTHORITY CHECK</h3>
-
-  <form onsubmit="checkAuth(event)">
-
-    <label>Username</label>
-
-    <input type="text" id="username" required style="width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;" placeholder="huokaingthara" />
-
-    <label>Access Key</label>
-
-    <input type="password" id="password" required style="width: 100%; padding: 12px; margin: 8px 0 25px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;" placeholder="••••••••" />
-
-    <button type="submit" class="console-btn" style="width: 100%;">ACCESS CORE</button>
-
-  </form>
-
-</div>
-
-
-
-<div id="content" style="display:none;">
-
-  <nav>
-
-    <a href="#terminal-sec">Command Center</a>
-
-    <a href="#year2038">Technical Analysis</a>
-
-    <a href="#cost-estimate">Budgeting</a>
-
-  </nav>
-
-
-
-  <section id="terminal-sec">
-
-    <h2>Secure Command Center</h2>
-
-    <div id="security-console">
-
-      <div>> [SYSTEM] Secure Session Established.</div>
-
-      <div>> [INFO] Ready to verify signatures and simulate time-warp.</div>
-
-    </div>
-
-    
-
-    <div id="p-container" class="progress-bar-container">
-
-        <div id="p-bar" class="progress-bar"></div>
-
-    </div>
-
-
-
-    <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;">
-
-      <button class="console-btn" onclick="TharaSecurity.initDashboard('security-console')">Verify GPG Signature</button>
-
-      <button class="console-btn" style="background: #444;" onclick="triggerOverflowTest()">Test Y2K38 Overflow</button>
-
-      <button class="console-btn" style="background: var(--danger);" onclick="simulateDecryption()">Decrypt Secret Asset</button>
-
-      <button class="console-btn" style="background: #6a0dad;" onclick="TharaExpertise.performCTIScan()">CTI Threat Scan</button>
-
-      <button class="console-btn" style="background: #8b0000;" onclick="TharaExpertise.launchPentestModule()">Pentest Attack Sim</button>
-
-      <button class="console-btn" style="background: #008080;" onclick="TharaExpertise.runAIRecovery()">AI Code Audit</button>
-
-      <button class="console-btn" style="background: #2c3e50; border: 1px solid var(--accent);" onclick="RemoteOrchestrator.executeRemoteUpgrade()">SSH Remote Upgrade</button>
-
-      <button class="console-btn" style="background: #2c3e50; border: 1px solid var(--accent);" onclick="RemoteOrchestrator.executeRemoteUpgrade()">🛰️ REMOTE NODE MANAGER</button>
-      
-    </div>
-
-    
-
-    <div style="margin-top: 20px; border-top: 1px solid #444; padding-top: 15px;">
-
-    <h4 style="font-family: 'Orbitron', sans-serif; color: var(--accent);">FORRENSIC UTILITIES</h4>
-
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-
-        <button class="console-btn" style="background: #27ae60;" onclick="ForensicAuditor.exportReport()">Export Compliance Log</button>
-
-        <button class="console-btn" style="background: #e67e22;" onclick="simulateDataRecovery()">Run Disaster Recovery Sim</button>
-
-        <button class="console-btn" 
-
-        style="background: linear-gradient(45deg, #00ff41, #004080); color: white;" 
-
-        onclick="triggerSentientAudit()">
-
-    Activate Sentient Audit
-
-</button>
-
-    </div>
-
-</div>
-
-  </section>
-
-
-
-  <section id="year2038">
-
-    <h2>Vulnerability Analysis</h2>
-
-    <p>On <strong>January 19, 2038, at 03:14:07 UTC</strong>, the 32-bit signed integer will wrap around.</p>
-
-    <p>This will cause legacy systems to interpret the date as December 13, 1901. For security hardware, this can invalidate SSL certificates, break encryption logs, and crash kernel-level processes.</p>
-
-    <pre><code>// Legacy Time Check (C++)
-
-int32_t current_time = 2147483647; 
-
-// 0x7FFFFFFF -> 0x80000000 (Negative)</code></pre>
-
-  </section>
-
-
-
-  <section id="cost-estimate">
-
-    <h2>Enterprise Remediation</h2>
-
-    <p>Estimate the global budget for upgrading 32-bit legacy infrastructure:</p>
-
-    <input type="number" id="systemCount" value="5000" style="padding: 12px; border-radius: 4px; border: 1px solid #ccc; width: 150px;" />
-
-    <button class="console-btn" onclick="estimateCost()">Get Budget Quote</button>
-
-    <p id="costResult" style="margin-top: 15px; font-size: 1.2em; font-weight: bold; color: var(--primary);"></p>
-
-  </section>
-
-
-
-  <footer>
-
-    <p>© 2026 Research Initiative | Lead Dev: <strong>huokaingthara</strong> | Secure Access V3.0</p>
-
-  </footer>
-
-</div>
-
-
-
-  <script>
-
-  // 1. LIVE COUNTDOWN LOGIC
-
-  const targetDate = new Date("Jan 19, 2038 03:14:07").getTime();
-
-
-
-  function updateTimer() {
-
-    const now = new Date().getTime();
-
-    const distance = targetDate - now;
-
-
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-
-
-    document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-    
-
-    if (distance < 0) {
-
-      clearInterval(timerInterval);
-
-      document.getElementById("timer").innerHTML = "OVERFLOW REACHED";
-
-    }
-
-  }
-
-  const timerInterval = setInterval(updateTimer, 1000);
-
-  updateTimer();
-
-
-
-  // 2. AUTHENTICATION
-
-  function checkAuth(event) {
-
-    event.preventDefault();
-
-    if(document.getElementById('username').value === 'huokaingthara' && 
-
-       document.getElementById('password').value === 'dutyfree') {
-
-      document.getElementById('login').style.display = 'none';
-
-      document.getElementById('content').style.display = 'block';
-
-    } else {
-
-      alert('ACCESS DENIED.');
-
-    }
-
-  }
-
-
-
-  // 3. SECURITY & DECRYPTION LOGIC
-
-  const TharaSecurity = {
-
-    initDashboard: function(id) {
-
-        const el = document.getElementById(id);
-
-        el.innerHTML += `<div style="color:var(--accent);">[*] Executing: gpg --verify ghost_protocol.enc.asc...</div>`;
-
-        setTimeout(() => {
-
-            el.innerHTML += `<div style="color:var(--accent); font-weight:bold;">[+] SIGNATURE VALID: HUOKAING THARA AUTHENTICATED.</div>`;
-
-            el.scrollTop = el.scrollHeight;
-
-        }, 1200);
-
-    }
-
-  };
-
-
-
-  function simulateDecryption() {
-
-    const el = document.getElementById('security-console');
-
-    const pCont = document.getElementById('p-container');
-
-    const pBar = document.getElementById('p-bar');
-
-    
-
-    el.innerHTML += `<div>[*] Initializing ChaCha20 Decryption...</div>`;
-
-    pCont.style.display = 'block';
-
-    let width = 0;
-
-    
-
-    const interval = setInterval(() => {
-
-        if (width >= 100) {
-
-            clearInterval(interval);
-
-            el.innerHTML += `<div style="color:var(--accent);">[+] SUCCESS: secret_asset.tar.gz extracted.</div>`;
-
-            el.scrollTop = el.scrollHeight;
-
-        } else {
-
-            width++;
-
-            pBar.style.width = width + '%';
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+    <title>GHOST PROTOCOL: CORE V1 - THARA EDITION</title>
+    <style>
+        :root { 
+            --primary: #004080; 
+            --terminal-bg: #0a0a0a; 
+            --accent: #00ff41; 
+            --warn: #ffae00; 
+            --danger: #ff3e3e; 
+            --hologram-cyan: #00f3ff;
+        }
+        
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #050505; color: #e0e0e0; scroll-behavior: smooth; }
+        
+        header { background: linear-gradient(180deg, var(--primary), #000); color: white; padding: 2rem; text-align: center; border-bottom: 2px solid var(--hologram-cyan); }
+        #countdown-container { margin-top: 15px; padding: 10px; background: rgba(0,243,255,0.1); border: 1px solid var(--hologram-cyan); border-radius: 8px; display: inline-block; }
+        #timer { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--hologram-cyan); text-shadow: 0 0 10px var(--hologram-cyan); }
+
+        nav { background: #111; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
+        nav a { margin: 0 15px; font-weight: bold; color: var(--hologram-cyan); text-decoration: none; transition: 0.3s; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; }
+        nav a:hover { color: white; text-shadow: 0 0 5px var(--hologram-cyan); }
+
+        section { max-width: 1000px; background: #111; padding: 25px; margin: 20px auto; border-radius: 8px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        h2 { color: var(--hologram-cyan); border-left: 5px solid var(--hologram-cyan); padding-left: 15px; font-family: 'Orbitron', sans-serif; }
+
+        /* Terminal Console */
+        #security-console { 
+            background: var(--terminal-bg); color: var(--accent); 
+            font-family: 'Courier New', monospace; padding: 20px; 
+            border-radius: 4px; border: 1px solid #444; height: 350px;
+            overflow-y: auto; margin-top: 20px; line-height: 1.4;
         }
 
-    }, 30);
+        /* Input Controls */
+        .hologram-panel { background: rgba(0, 243, 255, 0.05); padding: 20px; border-radius: 8px; border: 1px solid #222; margin-top: 20px; }
+        .cyber-input { 
+            background: #000; border: 1px solid var(--primary); color: var(--hologram-cyan); 
+            padding: 10px; margin: 5px; border-radius: 4px; width: 200px; font-family: 'Orbitron', sans-serif;
+        }
+        
+        .console-btn { 
+            background: var(--primary); color: white; border: 1px solid var(--hologram-cyan); 
+            padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;
+            transition: 0.3s; font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+        }
+        .console-btn:hover { background: var(--hologram-cyan); color: #000; box-shadow: 0 0 15px var(--hologram-cyan); }
 
-  }
+        .progress-bar-container { width: 100%; background: #222; border-radius: 4px; margin: 15px 0; display: none; height: 10px; border: 1px solid #444; }
+        .progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.1s; }
 
+        footer { text-align: center; padding: 40px; color: #555; font-size: 0.8em; font-family: 'Orbitron', sans-serif; }
+    </style>
+</head>
+<body>
 
+<header>
+    <h1 style="font-family: 'Orbitron', sans-serif; margin:0; letter-spacing: 4px;">GHOST PROTOCOL: CORE V1</h1>
+    <div id="countdown-container">
+        <div style="font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">32-BIT UNIX EPOCH OVERFLOW COUNTDOWN</div>
+        <div id="timer">0000d 00h 00m 00s</div>
+    </div>
+</header>
 
-  function triggerOverflowTest() {
+<div id="login" style="max-width: 400px; margin: 80px auto; background: #111; padding: 30px; border-radius: 12px; border: 1px solid var(--hologram-cyan); box-shadow: 0 0 30px rgba(0,243,255,0.2);">
+    <h3 style="text-align:center; font-family: 'Orbitron', sans-serif; color: var(--hologram-cyan);">AUTHORITY CHECK</h3>
+    <form onsubmit="checkAuth(event)">
+        <label style="font-size: 0.8rem;">OPERATOR ID</label>
+        <input type="text" id="username" required class="cyber-input" style="width: 100%; box-sizing: border-box; margin-bottom: 15px;" placeholder="huokaingthara" />
+        <label style="font-size: 0.8rem;">ACCESS KEY</label>
+        <input type="password" id="password" required class="cyber-input" style="width: 100%; box-sizing: border-box; margin-bottom: 25px;" placeholder="••••••••" />
+        <button type="submit" class="console-btn" style="width: 100%;">INITIALIZE BIOMETRICS</button>
+    </form>
+</div>
 
-    const el = document.getElementById('security-console');
+<div id="content" style="display:none;">
+    <nav>
+        <a href="#terminal-sec">COMMAND CENTER</a>
+        <a href="#year2038">VULNERABILITY</a>
+        <a href="#cost-estimate">REMEDIATION</a>
+    </nav>
 
-    const MAX_INT32 = 2147483647;
+    <section id="terminal-sec">
+        <h2>Secure Command Center</h2>
+        
+        <div id="security-console">
+            <div>> [SYSTEM] Secure Session Established. Welcome, Operator THARA.</div>
+            <div>> [INFO] Kernel: Ghost_v1.0-Stable | Mode: Sentient-Audit-Enabled</div>
+        </div>
 
-    const before = new Date(MAX_INT32 * 1000).toUTCString();
+        <div id="p-container" class="progress-bar-container">
+            <div id="p-bar" class="progress-bar"></div>
+        </div>
 
-    const after = new Date(-2147483648 * 1000).toUTCString();
+        <div class="hologram-panel">
+            <h4 style="margin-top:0; color: var(--hologram-cyan); font-family: 'Orbitron', sans-serif;">🛰️ REMOTE NODE MANAGER</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <input type="text" id="ip-input" class="cyber-input" placeholder="IP: 192.168.43.1">
+                <input type="text" id="port-input" class="cyber-input" placeholder="Port: 8022" style="width: 100px;">
+                <input type="text" id="user-input" class="cyber-input" placeholder="User: u0_a155" style="width: 150px;">
+                <button class="console-btn" onclick="RemoteOrchestrator.addNodeManual()">REGISTER NODE</button>
+            </div>
+        </div>
 
-    
+        <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+            <button class="console-btn" onclick="RemoteOrchestrator.executeRemoteUpgrade()">EXECUTE SSH PATCH</button>
+            <button class="console-btn" style="background: #444;" onclick="triggerOverflowTest()">Test Y2K38 Overflow</button>
+            <button class="console-btn" style="background: var(--danger);" onclick="simulateDecryption()">Decrypt Secret Asset</button>
+            <button class="console-btn" style="background: #27ae60;" onclick="exportComplianceLog()">Export Compliance Log</button>
+        </div>
+    </section>
 
-    el.innerHTML += `<div style="color:var(--warn); margin-top:10px;">[!] SIMULATING 32-BIT OVERFLOW...</div>`;
+    <section id="year2038">
+        <h2>Technical Analysis</h2>
+        <p>On <strong>January 19, 2038, at 03:14:07 UTC</strong>, 32-bit signed integers will overflow.</p>
+        
+        <pre style="background:#000; padding:15px; color:var(--warn); border:1px solid #333;"><code>// 32-bit Limit Reach
+int32_t t = 2147483647; 
+t = t + 1; // Returns -2147483648 (Year 1901)</code></pre>
+    </section>
 
-    el.innerHTML += `<div style="font-size:0.85em;">T-Zero: ${before}</div>`;
+    <section id="cost-estimate">
+        <h2>Enterprise Remediation</h2>
+        <p>Calculate global remediation budget for legacy infrastructure:</p>
+        <input type="number" id="systemCount" value="5000" class="cyber-input" />
+        <button class="console-btn" onclick="estimateCost()">Get Budget Quote</button>
+        <p id="costResult" style="margin-top: 15px; font-size: 1.2em; font-weight: bold; color: var(--hologram-cyan);"></p>
+    </section>
 
-    el.innerHTML += `<div style="font-size:0.85em; color:var(--danger);">Overflow: ${after}</div>`;
+    <footer>
+        <p>© 2026 | Lead Scientist: <strong>HUOKAING THARA</strong> | United Nations Sentinel Project</p>
+    </footer>
+</div>
 
-    el.scrollTop = el.scrollHeight;
+<script>
+    // 1. COUNTDOWN LOGIC
+    const targetDate = new Date("Jan 19, 2038 03:14:07").getTime();
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    setInterval(updateTimer, 1000);
 
-  }
+    // 2. AUTHENTICATION (huokaingthara / dutyfree)
+    function checkAuth(event) {
+        event.preventDefault();
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+        if(u === 'huokaingthara' && p === 'dutyfree') {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+        } else {
+            alert('ACCESS DENIED: Credentials Invalid.');
+        }
+    }
 
+    // 3. REMOTE ORCHESTRATOR LOGIC (Revised for Manual Input & Thara's Server)
+    const RemoteOrchestrator = {
+        nodes: [],
+        defaultConfig: { user: "u0_a155", port: "8022", ip: "192.168.43.1" },
 
+        addNodeManual: function() {
+            const ip = document.getElementById('ip-input').value.trim() || this.defaultConfig.ip;
+            const port = document.getElementById('port-input').value.trim() || this.defaultConfig.port;
+            const user = document.getElementById('user-input').value.trim() || this.defaultConfig.user;
+            const consoleEl = document.getElementById('security-console');
 
-  function estimateCost() {
+            const newNode = { ip, port, user, src: "MANUAL_ENTRY" };
+            this.nodes.push(newNode);
+            
+            consoleEl.innerHTML += `<div style="color:var(--hologram-cyan)">> [REGISTERED] ${user}@${ip}:${port} [SRC: ${newNode.src}]</div>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        },
 
-    const count = parseInt(document.getElementById('systemCount').value);
+        executeRemoteUpgrade: function() {
+            const consoleEl = document.getElementById('security-console');
+            if (this.nodes.length === 0) { this.addNodeManual(); }
 
-    
+            consoleEl.innerHTML += `<div style="color:var(--accent); margin-top:10px;">> [ORCHESTRATOR] Initiating SSH Handshake with Nodes...</div>`;
+            
+            this.nodes.forEach((node, index) => {
+                setTimeout(() => {
+                    consoleEl.innerHTML += `<div>[CONN] Tunneling to ${node.user}@${node.ip}:${node.port}...</div>`;
+                    this.auditNode(node, consoleEl);
+                }, index * 1000);
+            });
+        },
 
-    // Weighting the costs:
+        auditNode: function(node, el) {
+            setTimeout(() => {
+                const isVuln = Math.random() > 0.5;
+                if (isVuln) {
+                    el.innerHTML += `<div style="color:var(--danger)">[!] ${node.ip}: 32-bit architecture detected. RISK: CRITICAL.</div>`;
+                    el.innerHTML += `<div style="color:var(--accent)">[PATCH] Executing remote 64-bit kernel upgrade via SSH... SUCCESS.</div>`;
+                } else {
+                    el.innerHTML += `<div style="color:var(--accent)">[OK] ${node.ip}: Verified 64-bit Compliance.</div>`;
+                }
+                el.scrollTop = el.scrollHeight;
+            }, 800);
+        }
+    };
 
-    // 60% are standard software patches ($300/unit)
+    // 4. EXTRA UTILITIES
+    function simulateDecryption() {
+        const el = document.getElementById('security-console');
+        const pCont = document.getElementById('p-container');
+        const pBar = document.getElementById('p-bar');
+        el.innerHTML += `<div>[*] Decrypting encrypted_satellite_comms.gpg...</div>`;
+        pCont.style.display = 'block';
+        let w = 0;
+        const iv = setInterval(() => {
+            if (w >= 100) { clearInterval(iv); el.innerHTML += `<div style="color:var(--accent)">[+] DECRYPTED: Access Granted to Satellite Uplink.</div>`; }
+            else { w++; pBar.style.width = w + '%'; }
+        }, 20);
+    }
 
-    // 30% require firmware/embedded updates ($1,200/unit)
+    function triggerOverflowTest() {
+        const el = document.getElementById('security-console');
+        el.innerHTML += `<div style="color:var(--warn); margin-top:10px;">[!] SIMULATING Y2K38 OVERFLOW...</div>`;
+        el.innerHTML += `<div>T-Minus 0: Jan 19 03:14:07 2038</div>`;
+        el.innerHTML += `<div style="color:var(--danger)">ROLLOVER: Dec 13 20:45:52 1901</div>`;
+        el.scrollTop = el.scrollHeight;
+    }
 
-    // 10% require total hardware decommissioning ($5,000/unit)
+    function estimateCost() {
+        const count = document.getElementById('systemCount').value;
+        const total = count * 1500; // Weighted average
+        document.getElementById('costResult').innerText = `Estimated Global Remediation Budget: $${total.toLocaleString()}`;
+    }
 
-    
-
-    const softwareCost = (count * 0.60) * 300;
-
-    const firmwareCost = (count * 0.30) * 1200;
-
-    const hardwareCost = (count * 0.10) * 5000;
-
-    
-
-    const totalBudget = softwareCost + firmwareCost + hardwareCost;
-
-
-
-    const resultEl = document.getElementById('costResult');
-
-    resultEl.style.color = 'var(--warn)';
-
-    resultEl.innerText = `Total Remediation Budget: $${totalBudget.toLocaleString()}`;
-
-    
-
-    // Log to console for aesthetic effect
-
-    const consoleEl = document.getElementById('security-console');
-
-    consoleEl.innerHTML += `<div style="color:var(--warn);">> [ECON] Risk-weighted budget generated for ${count} nodes...</div>`;
-
-    consoleEl.scrollTop = consoleEl.scrollHeight;
-
-}
-
+    function exportComplianceLog() {
+        const el = document.getElementById('security-console');
+        el.innerHTML += `<div style="color:var(--hologram-cyan)">> [EXPORT] Compliance_Report_Thara_2026.txt generated.</div>`;
+    }
 </script>
 
-  <script src="script.js"></script>
-  <script src="script1.js"></script>
-  <script src="script2.js"></script>
-  <script src="script3.js"></script>
-  <script src="script4.js"></script>
-  <script src="script5.js"></script>
-  <script src="script6.js"></script>
-  <script src="script7.js"></script>
-  <script src="script8.js"></script>
-  <script src="script9.js"></script>
-  <script src="script10.js"></script>
-  <script src="script11.js"></script>
-  <script src="script12.js"></script>
-
-  
 </body>
-
-
 </html>
-
-

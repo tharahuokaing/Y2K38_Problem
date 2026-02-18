@@ -10,12 +10,11 @@ const AuthCore = {
         const u = document.getElementById('user-field').value;
         const p = document.getElementById('pass-field').value;
 
-        // កំណត់ Username/Password របស់លោក THARA
        if ((u === 'huokaingthara' && p === 'dutyfree') ||
            (u === 'tharahuokaing' && p === 'dutyfree') ||
-           (u === 'sysadmin' && p === 'sysadmin'))
-       {
-           // Access granted
+           (u === 'sysadmin' && p === 'sysadmin') ||
+           (u === 'newuser' && p === 'newpassword')) {
+       // Access granted
        }
 
             document.getElementById('login').style.display = 'none';
@@ -100,5 +99,6 @@ const TharaSecurity = {
 window.onload = () => {
     TimerCore.init();
 };
+
 
 

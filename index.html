@@ -7,48 +7,27 @@
     <title>GHOST PROTOCOL: CORE V1 - Command Center</title>
     <style>
         :root { 
-            --primary: #004080; 
-            --terminal-bg: #0a0a0a; 
-            --accent: #00ff41; 
-            --warn: #ffae00; 
-            --danger: #ff3e3e; 
-            --hologram-cyan: #00f3ff;
+            --primary: #004080; --terminal-bg: #0a0a0a; 
+            --accent: #00ff41; --warn: #ffae00; 
+            --danger: #ff3e3e; --hologram-cyan: #00f3ff;
         }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #0e1217; color: #e0e0e0; scroll-behavior: smooth; }
-        
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #0e1217; color: #e0e0e0; overflow-x: hidden; }
         header { background: linear-gradient(180deg, var(--primary), #001a33); color: white; padding: 2rem; text-align: center; border-bottom: 2px solid var(--hologram-cyan); }
         #timer { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--hologram-cyan); text-shadow: 0 0 10px var(--hologram-cyan); }
-
         nav { background: rgba(0, 26, 51, 0.9); padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--hologram-cyan); backdrop-filter: blur(10px); }
-        nav a { margin: 0 15px; font-weight: bold; color: var(--hologram-cyan); text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; }
-
+        nav a { margin: 0 15px; font-weight: bold; color: var(--hologram-cyan); text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 1px; }
         section { max-width: 1000px; background: rgba(255,255,255,0.05); padding: 25px; margin: 20px auto; border-radius: 8px; border: 1px solid #333; }
         h2 { color: var(--hologram-cyan); border-left: 5px solid var(--hologram-cyan); padding-left: 15px; font-family: 'Orbitron', sans-serif; }
-
         #security-console { 
             background: var(--terminal-bg); color: var(--accent); 
             font-family: 'Courier New', monospace; padding: 20px; 
             border-radius: 8px; border: 1px solid var(--hologram-cyan); height: 350px;
             overflow-y: auto; box-shadow: inset 0 0 15px rgba(0, 255, 65, 0.2);
         }
-
         .input-group { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .input-group input { 
-            background: #1a1a1a; border: 1px solid #444; color: white; 
-            padding: 12px; border-radius: 4px; flex: 1; min-width: 150px;
-            font-family: 'Orbitron', sans-serif; font-size: 0.8rem;
-        }
-        .input-group input:focus { border-color: var(--hologram-cyan); outline: none; }
-
-        .console-btn { 
-            background: rgba(0, 64, 128, 0.5); color: white; border: 1px solid var(--hologram-cyan); 
-            padding: 12px 20px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif;
-            transition: 0.3s; font-size: 0.75rem;
-        }
+        .input-group input { background: #000; border: 1px solid #444; color: var(--accent); padding: 12px; border-radius: 4px; flex: 1; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; outline: none; }
+        .console-btn { background: rgba(0, 64, 128, 0.5); color: white; border: 1px solid var(--hologram-cyan); padding: 12px 20px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: 0.3s; font-size: 0.75rem; }
         .console-btn:hover { background: var(--hologram-cyan); color: black; box-shadow: 0 0 20px var(--hologram-cyan); }
-        
-        .progress-bar-container { width: 100%; background: #222; border-radius: 4px; margin: 15px 0; display: none; }
-        .progress-bar { height: 10px; background: var(--hologram-cyan); width: 0%; transition: width 0.1s; }
     </style>
 </head>
 <body>
@@ -56,17 +35,17 @@
 <header>
     <h1 style="font-family: 'Orbitron', sans-serif; letter-spacing: 5px;">GHOST PROTOCOL: CORE V1</h1>
     <div id="countdown-container">
-        <div style="font-size: 0.7rem; color: #888;">T-MINUS UNTIL 32-BIT EPOCH OVERFLOW</div>
-        <div id="timer">INITIALIZING...</div>
+        <div style="font-size: 0.7rem; color: #888; letter-spacing: 2px;">T-MINUS UNTIL 32-BIT EPOCH OVERFLOW</div>
+        <div id="timer">SYNCHRONIZING...</div>
     </div>
 </header>
 
-<div id="login" style="max-width: 400px; margin: 80px auto; background: rgba(0, 26, 51, 0.8); padding: 30px; border-radius: 12px; border: 1px solid var(--hologram-cyan);">
+<div id="login" style="max-width: 400px; margin: 80px auto; background: rgba(0, 26, 51, 0.8); padding: 30px; border-radius: 12px; border: 1px solid var(--hologram-cyan); box-shadow: 0 0 30px rgba(0, 243, 255, 0.1);">
     <h3 style="text-align:center; font-family: 'Orbitron', sans-serif; color: var(--hologram-cyan);">AUTHORITY CHECK</h3>
-    <form onsubmit="checkAuth(event)">
-        <input type="text" id="username" required placeholder="username" autocomplete="off" spellcheck="false" style="width:100%; padding:12px; margin:10px 0; background:#000; color:var(--accent); border:1px solid #333; font-family:'Orbitron',monospace; outline:none; box-shadow:inset 0 0 5px rgba(0,255,65,0.1);"/>
-        <input type="text" id="dutyfree" required placeholder="password" autocomplete="off" spellcheck="false" style="width:100%; padding:12px; margin:10px 0; background:#000; color:var(--accent); border:1px solid #333; font-family:'Orbi
-        <button type="submit" class="console-btn" style="width: 100%;">ACCESS CORE</button>
+    <form onsubmit="AuthCore.check(event)">
+        <input type="text" id="user-field" required placeholder="username" autocomplete="off" style="width:100%; padding:12px; margin:10px 0; background:#000; color:var(--accent); border:1px solid #333; font-family:'Orbitron',monospace; box-sizing: border-box;"/>
+        <input type="password" id="pass-field" required placeholder="password" autocomplete="off" style="width:100%; padding:12px; margin:10px 0; background:#000; color:var(--accent); border:1px solid #333; font-family:'Orbitron',monospace; box-sizing: border-box;"/>
+        <button type="submit" class="console-btn" style="width: 100%; margin-top: 10px;">ACCESS CORE</button>
     </form>
 </div>
 
@@ -74,21 +53,17 @@
     <nav>
         <a href="#terminal-sec">COMMAND CENTER</a>
         <a href="#remote-manager">NODE MANAGER</a>
-        <a href="#year2038">VULNERABILITY SCAN</a>
+        <a href="#year2038">FORENSICS</a>
     </nav>
 
     <section id="terminal-sec">
         <h2>Secure Command Center</h2>
         <div id="security-console">
-            <div>> [SYSTEM] Secure Session Established for HUOKAING THARA.</div>
+            <div>> [SYSTEM] Secure Session Established. Welcome, THARA.</div>
         </div>
-        
-        <div id="p-container" class="progress-bar-container"><div id="p-bar" class="progress-bar"></div></div>
-
         <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;">
-            <button class="console-btn" onclick="TharaSecurity.initDashboard('security-console')">Verify GPG Signature</button>
-            <button class="console-btn" style="border-color: var(--warn);" onclick="triggerOverflowTest()">Simulation: T-Zero</button>
-            <button class="console-btn" style="border-color: var(--danger);" onclick="simulateDecryption()">Decrypt Satellite Feed</button>
+            <button class="console-btn" onclick="TharaSecurity.verifyGPG()">Verify GPG Signature</button>
+            <button class="console-btn" style="border-color: var(--danger);" onclick="TharaSecurity.clearConsole()">Wipe Logs</button>
         </div>
     </section>
 
@@ -97,37 +72,13 @@
         <div class="input-group">
             <input type="text" id="ip-input" placeholder="IP: 192.168.43.1">
             <input type="text" id="port-input" placeholder="PORT: 8022">
-            <input type="text" id="user-input" placeholder="USER: u0_a155">
+            <input type="text" id="u-input" placeholder="USER: u0_a155">
         </div>
-        <div style="display: flex; gap: 10px;">
-            <button class="console-btn" onclick="RemoteOrchestrator.addNodeManual()">REGISTER NODE</button>
-            <button class="console-btn" style="background: var(--primary);" onclick="RemoteOrchestrator.executeRemoteUpgrade()">EXECUTE SSH PATCH</button>
-        </div>
+        <button class="console-btn" onclick="RemoteOrchestrator.register()">REGISTER NODE</button>
+        <button class="console-btn" style="background: var(--primary);" onclick="RemoteOrchestrator.deploy()">EXECUTE SSH PATCH</button>
     </section>
-
-    <section id="year2038">
-        <h2>Y2K38 Global Remediation</h2>
-        <p>Estimated Budget for Upgrading 32-bit Architecture:</p>
-        <input type="number" id="systemCount" value="5000" style="padding:10px; background:#1a1a1a; color:white; border:1px solid #444;">
-        <button class="console-btn" onclick="estimateCost()">Calculate Risk-Weighted Budget</button>
-        <p id="costResult" style="margin-top: 15px; font-size: 1.2em; font-weight: bold; color: var(--warn);"></p>
-    </section>
-
-    <footer>
-        <p>© 2026 Research Initiative | Lead: <strong>huokaingthara</strong> | Secure Access V3.0</p>
-    </footer>
 </div>
 
 <script src="script.js"></script>
-<script src="script1.js"></script>
-<script src="script2.js"></script>  
-<script src="script3.js"></script>
-<script src="script4.js"></script>
-<script src="script5.js"></script>
-<script src="script6.js"></script>
-<script src="script7.js"></script>
-
 </body>
 </html>
-
-

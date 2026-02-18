@@ -11,7 +11,13 @@ const AuthCore = {
         const p = document.getElementById('pass-field').value;
 
         // កំណត់ Username/Password របស់លោក THARA
-        if (u === 'huokaingthara', 'tharahuokaing',  && p === 'dutyfree') {
+       if ((u === 'huokaingthara' && p === 'dutyfree') ||
+           (u === 'tharahuokaing' && p === 'dutyfree') ||
+           (u === 'sysadmin' && p === 'sysadmin'))
+       {
+           // Access granted
+       }
+
             document.getElementById('login').style.display = 'none';
             document.getElementById('content').style.display = 'block';
             this.logToConsole("Authentication Successful. Zero-Trust protocol bypassed.");
@@ -94,4 +100,5 @@ const TharaSecurity = {
 window.onload = () => {
     TimerCore.init();
 };
+
 

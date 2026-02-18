@@ -78,7 +78,23 @@
         <button class="console-btn" style="background: var(--primary);" onclick="RemoteOrchestrator.deploy()">EXECUTE SSH PATCH</button>
     </section>
 </div>
+        <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;">
+            <button class="console-btn" style="background: #6a0dad;" onclick="TharaExpertise.performCTIScan()">CTI Threat Scan</button>
+            <button class="console-btn" style="background: #8b0000;" onclick="TharaExpertise.launchPentestModule()">Pentest Attack Sim</button>
+            <button class="console-btn" style="background: #008080;" onclick="TharaExpertise.runAIRecovery()">AI Code Audit</button>
+            <button class="console-btn" style="background: #27ae60;" onclick="ForensicAuditor.exportReport()">Export Compliance Log</button>
+        </div>
+        <div style="margin-top: 20px; border-top: 1px solid #444; padding-top: 15px;">
+    <h4 style="font-family: 'Orbitron', sans-serif; color: var(--hologram-cyan);">DATA & RECOVERY</h4>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="console-btn" style="background: #e67e22;" onclick="DataRecoveryCore.simulateDataRecovery()">Run Disaster Recovery Sim</button>
+        <button class="console-btn" style="background: #c0392b;" onclick="DataRecoveryCore.simulateDecryption()">Decrypt Secret Asset</button>
+        <button class="console-btn" style="background: linear-gradient(45deg, #00ff41, #004080);" onclick="triggerSentientAudit()">Activate Sentient Audit</button>
+    </div>
+</div>
+
 
 <script src="script.js"></script>
 </body>
 </html>
+

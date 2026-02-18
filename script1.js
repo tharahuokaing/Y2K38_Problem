@@ -1,4 +1,4 @@
-/* GHOST PROTOCOL: FORENSIC & THREAT INTELLIGENCE v1.0
+/* GHOST PROTOCOL: FORENSIC & CTI v1.0
    Module: script1.js
    Focus: Satellite Network Integrity & Vulnerability Mapping
 */
@@ -81,3 +81,4 @@ const ForensicAuditor = {
         consoleEl.innerHTML += `<div style="color:var(--accent);">[+] Report exported as .txt file. Securely saved.</div>`;
     }
 };
+

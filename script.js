@@ -1,66 +1,96 @@
-function estimateCost() {
-  // Average cost per system upgrade in USD (example value)
-  const costPerSystem = 2500;
+/* GHOST PROTOCOL: CORE LOGIC v2.1
+   Author: HUOKAING THARA
+   Security Expertise: Y2K38 Mitigation & Disaster Recovery
+*/
 
-  // Get the number of systems input
-  const systemCount = parseInt(document.getElementById('systemCount').value) || 0;
+// 1. AUTHENTICATION MODULE
+const AuthCore = {
+    check: function(event) {
+        event.preventDefault();
+        const u = document.getElementById('user-field').value;
+        const p = document.getElementById('pass-field').value;
 
-  if(systemCount <= 0){
-    document.getElementById('costResult').textContent = 'Please enter a positive number of systems.';
-    document.getElementById('hologramEffect').textContent = '';
-    return;
-  }
+        // កំណត់ Username/Password របស់លោក THARA
+        if (u === 'huokaingthara' && p === 'dutyfree') {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            this.logToConsole("Authentication Successful. Zero-Trust protocol bypassed.");
+        } else {
+            alert('ACCESS DENIED: Credentials mismatch.');
+        }
+    },
+    logToConsole: function(msg) {
+        const el = document.getElementById('security-console');
+        if (el) el.innerHTML += `<div style="color:var(--accent); font-size:0.8rem;">[AUTH] ${msg}</div>`;
+    }
+};
 
-  // Calculate total cost
-  const totalCost = systemCount * costPerSystem;
+// 2. Y2K38 REAL-TIME CLOCK
+const TimerCore = {
+    target: new Date("Jan 19, 2038 03:14:07").getTime(),
+    init: function() {
+        setInterval(() => {
+            const now = new Date().getTime();
+            const dist = this.target - now;
+            const d = Math.floor(dist / (1000 * 60 * 60 * 24));
+            const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((dist % (1000 * 60)) / 1000);
+            document.getElementById("timer").innerHTML = `${d}D ${h}H ${m}M ${s}S`;
+        }, 1000);
+    }
+};
 
-  // Format result with commas
-  const formattedCost = totalCost.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+// 3. REMOTE NODE ORCHESTRATOR
+const RemoteOrchestrator = {
+    nodes: [],
+    register: function() {
+        const ip = document.getElementById('ip-input').value;
+        const port = document.getElementById('port-input').value || "8022";
+        const user = document.getElementById('u-input').value || "u0_a155";
+        const consoleEl = document.getElementById('security-console');
 
-  document.getElementById('costResult').textContent = `Estimated upgrade cost: ${formattedCost} for ${systemCount} system(s).`;
+        if (/^(\d{1,3}\.){3}\d{1,3}$/.test(ip)) {
+            this.nodes.push({ip, port, user});
+            consoleEl.innerHTML += `<div style="color:var(--hologram-cyan);">[+] NODE_ID_${this.nodes.length}: ${user}@${ip}:${port} Registered.</div>`;
+            document.getElementById('ip-input').value = "";
+        } else {
+            alert("Invalid IP Address format.");
+        }
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+    },
+    deploy: function() {
+        const el = document.getElementById('security-console');
+        if (this.nodes.length === 0) {
+            el.innerHTML += `<div style="color:var(--warn);">[!] No target nodes available. Manual input required.</div>`;
+            return;
+        }
+        el.innerHTML += `<div style="color:white; margin-top:10px; font-weight:bold;">[>] DEPLOYING Y2K38 PATCH TO ${this.nodes.length} NODES...</div>`;
+        this.nodes.forEach((n, i) => {
+            setTimeout(() => {
+                el.innerHTML += `<div style="color:var(--accent);">[SSH] Patched ${n.user}@${n.ip} successfully.</div>`;
+                el.scrollTop = el.scrollHeight;
+            }, (i + 1) * 1000);
+        });
+    }
+};
 
-  // Hologram flicker effect text
-  const hologramText = "UPGRADE INITIATED";
+// 4. GENERAL SECURITY UTILS
+const TharaSecurity = {
+    verifyGPG: function() {
+        const el = document.getElementById('security-console');
+        el.innerHTML += `<div style="color:var(--warn);">[*] Executing GPG Signature Verification...</div>`;
+        setTimeout(() => {
+            el.innerHTML += `<div style="color:var(--accent);">[+] VALID SIGNATURE: Key ID 0xTHARA2038 verified.</div>`;
+            el.scrollTop = el.scrollHeight;
+        }, 800);
+    },
+    clearConsole: function() {
+        document.getElementById('security-console').innerHTML = "<div>> [SYSTEM] Console logs wiped. Session remains secure.</div>";
+    }
+};
 
-  // Create flickering hologram effect
-  let flicker = true;
-  const hologramDiv = document.getElementById('hologramEffect');
-  hologramDiv.style.color = '#0ff';
-  hologramDiv.style.textShadow = '0 0 8px #0ff, 0 0 24px #0ff, 0 0 48px #3effff';
-  hologramDiv.style.fontFamily = "'Orbitron', sans-serif";
-  hologramDiv.style.letterSpacing = '0.15em';
-  hologramDiv.style.userSelect = 'none';
-  hologramDiv.style.transition = 'opacity 0.3s ease-in-out';
-  hologramDiv.textContent = hologramText;
-
-  // Simple flicker effect
-  if(window.holoInterval) clearInterval(window.holoInterval);
-  window.holoInterval = setInterval(() => {
-    flicker = !flicker;
-    hologramDiv.style.opacity = flicker ? '1' : '0.5';
-  }, 500);
-}
-
-/**
- * Estimates the cost of upgrading legacy 32-bit systems to 64-bit.
- * Based on research & development initiative criteria.
- */
-function estimateCost() {
-    const count = document.getElementById('systemCount').value;
-    const baseRate = 450; // Average cost per system patch/upgrade
-    const total = count * baseRate;
-    
-    const resultEl = document.getElementById('costResult');
-    resultEl.innerHTML = `
-        <div style="border: 1px dashed var(--primary); padding: 10px; margin-top: 10px;">
-            <p>Target Systems: ${Number(count).toLocaleString()}</p>
-            <p>Estimated Budget: <span style="color:var(--danger);">$${total.toLocaleString()}</span></p>
-            <p style="font-size: 0.8rem; color: #555;">*Includes auditing, hardware migration, and binary recompilation.</p>
-        </div>
-    `;
-    
-    // Log to terminal
-    const el = document.getElementById('security-console');
-    el.innerHTML += `<div>[*] Financial Audit Generated for ${count} nodes.</div>`;
-    el.scrollTop = el.scrollHeight;
-}
+// Initialize system
+window.onload = () => {
+    TimerCore.init();
+};

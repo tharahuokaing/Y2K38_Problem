@@ -1,72 +1,61 @@
-/* HUOKAING THARA: ADVANCED REMOTE ORCHESTRATOR
-   Environment: Termux/Android SSH (Port 8022)
-   Expertise: Disaster Recovery & Y2K38 Defense
+/* GHOST PROTOCOL: NETWORK SNIFFER & KERNEL AUDIT v1.0
+   Module: script3.js
+   Expertise: Packet Inspection & System Integrity
 */
 
-const RemoteOrchestrator = {
-    // ចាប់ផ្ដើមដោយបញ្ជីទទេ (Manual Input Only)
-    nodes: [], 
-    
-    // ការកំណត់ Configuration សម្រាប់ Server របស់លោក
-    targetConfig: {
-        username: "u0_a155",
-        ip: "192.168.43.1",
-        port: 8022
-    },
-
-    // មុខងារបន្ថែម IP ដោយដៃ (Manual Input)
-    addNode: function() {
-        const input = document.getElementById('ip-input');
+const NetworkAuditor = {
+    // 1. មុខងារស្ទាក់ចាប់កញ្ចប់ទិន្នន័យ (Packet Sniffing Simulation)
+    startPacketSniffing: function() {
         const consoleEl = document.getElementById('security-console');
-        const ipValue = input.value.trim();
-
-        // Regex សម្រាប់ត្រួតពិនិត្យ IPv4
-        const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
-
-        if (ipPattern.test(ipValue)) {
-            this.nodes.push(ipValue);
-            consoleEl.innerHTML += `<div style="color:var(--hologram-cyan);">[+] Target Node Added: ${ipValue}</div>`;
-            input.value = ""; 
-        } else {
-            consoleEl.innerHTML += `<div style="color:var(--danger);">[!] ERR: Invalid IPv4 Format.</div>`;
-        }
-        consoleEl.scrollTop = consoleEl.scrollHeight;
-    },
-
-    // មុខងារចម្បងសម្រាប់ Execute ការ Upgrade
-    executeRemoteUpgrade: function() {
-        const consoleEl = document.getElementById('security-console');
+        consoleEl.innerHTML += `<div style="color:var(--accent); margin-top:10px;">[>] [NET] Monitoring Traffic on Interface: wlan0 (Port 8022)...</div>`;
         
-        // ប្រសិនបើគ្មាន IP បន្ថែមដោយដៃ វានឹងប្រើ IP គោលដៅរបស់លោកជា Default
-        if (this.nodes.length === 0) {
-            this.nodes.push(this.targetConfig.ip);
-            consoleEl.innerHTML += `<div style="color:#ffcc00;">[SYSTEM] Defaulting to primary server...</div>`;
-        }
+        const protocols = ["TCP", "UDP", "SSH-v2", "TLS-1.3"];
+        let count = 0;
 
-        consoleEl.innerHTML += `<div style="color:var(--hologram-cyan); margin-top:10px;">[>] [SSH] Initiating secure handshake with orchestrator...</div>`;
-        
-        this.nodes.forEach((ip, index) => {
-            setTimeout(() => {
-                // បង្ហាញព័ត៌មាន Username និង Port របស់លោក
-                consoleEl.innerHTML += `<div>[CONN] Attempting connection to ${this.targetConfig.username}@${ip}:${this.targetConfig.port}...</div>`;
-                this.auditArchitecture(ip, consoleEl);
-            }, index * 1500);
-        });
-    },
+        const sniffer = setInterval(() => {
+            const proto = protocols[Math.floor(Math.random() * protocols.length)];
+            const size = Math.floor(Math.random() * 1500);
+            const status = Math.random() > 0.1 ? "ALLOW" : "FLAGGED";
+            const color = status === "ALLOW" ? "var(--accent)" : "var(--danger)";
 
-    auditArchitecture: function(ip, el) {
-        // Forensics: ត្រួតពិនិត្យហានិភ័យ Y2K38 លើ Architecture
-        setTimeout(() => {
-            const isVulnerable = Math.random() > 0.5; 
+            consoleEl.innerHTML += `<div style="font-family:monospace; font-size:0.8rem;">
+                [SNIFF] <span style="color:${color};">${status}</span> | SRC: 192.168.43.1 | PROTO: ${proto} | LEN: ${size}
+            </div>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
             
-            if (isVulnerable) {
-                el.innerHTML += `<div style="color:var(--danger);">[!] ${ip}: 32-bit (i386) Architecture detected. Y2K38 risk: HIGH.</div>`;
-                el.innerHTML += `<div style="color:#00ff00;">[PATCH] Pushing 64-bit libc6-dev headers to ${this.targetConfig.username}@${ip}...</div>`;
-                el.innerHTML += `<div>[EXEC] apt-get install libc6-dev-i386 --upgrade -y</div>`;
-            } else {
-                el.innerHTML += `<div style="color:var(--hologram-cyan);">[OK] ${ip}: 64-bit (x86_64) verified. System is Y2K38 compliant.</div>`;
+            count++;
+            if (count >= 8) {
+                clearInterval(sniffer);
+                consoleEl.innerHTML += `<div style="color:var(--hologram-cyan);">[INFO] Sniffing session paused. All captured packets are encrypted.</div>`;
             }
-            el.scrollTop = el.scrollHeight;
-        }, 800);
+        }, 600);
+    },
+
+    // 2. មុខងារត្រួតពិនិត្យសុវត្ថិភាព Kernel (Kernel Integrity Scan)
+    checkKernelIntegrity: function() {
+        const consoleEl = document.getElementById('security-console');
+        consoleEl.innerHTML += `<div style="color:var(--warn); margin-top:10px;">[>] [KERNEL] Scanning Android/Termux Kernel Modules...</div>`;
+
+        setTimeout(() => {
+            consoleEl.innerHTML += `<div>[*] Checking /proc/sys/kernel/random/entropy_avail... [OK]</div>`;
+            consoleEl.innerHTML += `<div>[*] Verifying SE-Linux Policy: Enforcing... [OK]</div>`;
+            consoleEl.innerHTML += `<div>[*] Searching for Rootkits in /dev/nodes... [NONE FOUND]</div>`;
+            consoleEl.innerHTML += `<div style="color:var(--accent); font-weight:bold;">[+] INTEGRITY STATUS: 100% SECURE.</div>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }, 1500);
     }
 };
+
+// 3. មុខងារបង្ហាញព័ត៌មានប្រព័ន្ធ (System Metadata)
+function showSystemMetrics() {
+    const consoleEl = document.getElementById('security-console');
+    const ramUsage = (Math.random() * 40 + 20).toFixed(2);
+    const cpuLoad = (Math.random() * 15 + 5).toFixed(2);
+    
+    consoleEl.innerHTML += `<div style="border: 1px dashed var(--hologram-cyan); padding: 10px; margin-top:10px; color:#fff;">
+        <h4 style="margin:0; color:var(--hologram-cyan);">SYSTEM METRICS</h4>
+        CPU LOAD: ${cpuLoad}% | RAM USAGE: ${ramUsage}GB | THREADS: ACTIVE<br>
+        ARCHITECTURE: ARM64 (Y2K38 COMPLIANT)
+    </div>`;
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+}

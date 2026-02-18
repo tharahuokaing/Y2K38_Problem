@@ -11,7 +11,7 @@ const AuthCore = {
         const p = document.getElementById('pass-field').value;
 
         // កំណត់ Username/Password របស់លោក THARA
-        if (u === 'huokaingthara', 'tharahuokaing',  && p === 'dutyfree') {
+        if (u === 'huokaingthara' && p === 'dutyfree') {
             document.getElementById('login').style.display = 'none';
             document.getElementById('content').style.display = 'block';
             this.logToConsole("Authentication Successful. Zero-Trust protocol bypassed.");

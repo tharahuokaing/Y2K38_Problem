@@ -6,7 +6,7 @@ Author       : HUOKAING THARA
 Version      : 3.0.1 (Stable)
 Environment  : Android/Termux, Linux, Web
 Primary Goal : UNIX Epoch Overflow Mitigation & Remote SSH Orchestration
-License      : Proprietary / Research Initiative 2026
+License      : Proprietary / Research Initiative 2023
 ===========================================================================
 
 [ DESCRIPTION ]

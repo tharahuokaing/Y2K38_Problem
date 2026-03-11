@@ -1,4 +1,3 @@
-## ⚠️ Educational Use Only
 ===========================================================================
           GHOST PROTOCOL: CORE V1 - COMMAND CENTER (Y2K38)
 ===========================================================================
@@ -6,7 +5,7 @@ Author       : HUOKAING THARA
 Version      : 3.0.1 (Stable)
 Environment  : Android/Termux, Linux, Web
 Primary Goal : UNIX Epoch Overflow Mitigation & Remote SSH Orchestration
-License      : Proprietary / Research Initiative 2023
+License      : Proprietary / Research Initiative 2026
 ===========================================================================
 
 [ DESCRIPTION ]

@@ -1,0 +1,202 @@
+:root {
+    --primary: #004080;
+    --terminal-bg: #0a0a0a;
+    --accent: #00ff41;
+    --warn: #ffae00;
+    --danger: #ff3e3e;
+    --hologram-cyan: #00f3ff;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: #0e1217;
+    color: #e0e0e0;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    user-select: none; /* Prevent text selection globally */
+}
+
+/* Header & Countdown */
+header {
+    background: linear-gradient(180deg, var(--primary), #001a33);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 2px solid var(--hologram-cyan);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    -webkit-user-select: none; /* prevent select on mobile */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#timer {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    color: var(--hologram-cyan);
+    text-shadow: 0 0 10px var(--hologram-cyan);
+    margin-top: 10px;
+}
+
+/* Navigation */
+nav {
+    background: rgba(0, 26, 51, 0.9);
+    padding: 15px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--hologram-cyan);
+    backdrop-filter: blur(10px);
+    user-select:none;
+}
+
+nav a {
+    margin: 0 15px;
+    font-weight: bold;
+    color: var(--hologram-cyan);
+    text-decoration: none;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    user-select:none;
+}
+
+nav a:hover,
+nav a:focus {
+    color: white;
+    text-shadow: 0 0 8px var(--hologram-cyan);
+    outline: none;
+}
+
+/* Main Layout */
+section {
+    max-width: 1100px;
+    background: rgba(255,255,255,0.03);
+    padding: 25px;
+    margin: 25px auto;
+    border-radius: 8px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+h2 {
+    color: var(--hologram-cyan);
+    border-left: 5px solid var(--hologram-cyan);
+    padding-left: 15px;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    margin-top: 0;
+    user-select:none;
+}
+
+/* Console Terminal */
+#security-console {
+    background: var(--terminal-bg);
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--hologram-cyan);
+    height: 380px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.15);
+    line-height: 1.5;
+    font-size: 0.9rem;
+    user-select:none;
+}
+
+/* Forms & Inputs */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.input-group input {
+    background: #000;
+    border: 1px solid #444;
+    color: var(--accent);
+    padding: 12px;
+    border-radius: 4px;
+    flex: 1;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    transition: 0.3s;
+    text-shadow: 0 0 4px var(--accent);
+}
+
+.input-group input:focus {
+    border-color: var(--hologram-cyan);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+}
+
+/* Cyber Buttons */
+.console-btn {
+    background: rgba(0, 64, 128, 0.4);
+    color: white;
+    border: 1px solid var(--hologram-cyan);
+    padding: 12px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    transition: 0.3s;
+    font-size: 0.7rem;
+    font-weight: bold;
+    user-select:none;
+    text-shadow: 0 0 5px var(--hologram-cyan);
+}
+
+.console-btn:hover,
+.console-btn:focus {
+    background: var(--hologram-cyan);
+    color: black;
+    box-shadow: 0 0 20px var(--hologram-cyan);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 100%;
+    background: #111;
+    border-radius: 4px;
+    margin: 15px 0;
+    display: none;
+    height: 10px;
+    border: 1px solid #333;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--hologram-cyan);
+    width: 0%;
+    transition: width 0.1s;
+    box-shadow: 0 0 10px var(--hologram-cyan);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #555;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    user-select:none;
+}
+
+/* Auth Screen */
+#login {
+    max-width: 400px;
+    margin: 100px auto;
+    background: rgba(0, 20, 40, 0.9);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--hologram-cyan);
+    box-shadow: 0 0 50px rgba(0, 243, 255, 0.2);
+    user-select:none;
+}

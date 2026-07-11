@@ -1,3 +1,5 @@
+⚠️ Educational Use Only
+⚠️Do not use this source code for any unlawful or unethical purposes.⚠️
 ===========================================================================
           GHOST PROTOCOL: CORE V1 - COMMAND CENTER (Y2K38)
 ===========================================================================
